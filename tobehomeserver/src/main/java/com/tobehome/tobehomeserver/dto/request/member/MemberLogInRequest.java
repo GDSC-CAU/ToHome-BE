@@ -1,11 +1,12 @@
 package com.tobehome.tobehomeserver.dto.request.member;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
-public class MemberRequestDto {
-    private String email;
+@NoArgsConstructor
+public class MemberLogInRequest {
     private String nickname;
     private String password;
 }

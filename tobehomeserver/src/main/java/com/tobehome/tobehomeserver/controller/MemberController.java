@@ -15,9 +15,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public String signup(MemberSignInRequest request) {
-        memberService.signup(request);
-        return "redirect:/login";
+    public Long signup(@RequestBody MemberSignInRequest request) {
+        return memberService.signup(request);
     }
 
     @GetMapping("/logout")

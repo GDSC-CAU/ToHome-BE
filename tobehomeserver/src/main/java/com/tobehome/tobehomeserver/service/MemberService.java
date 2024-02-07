@@ -32,7 +32,9 @@ public class MemberService implements UserDetailsService {
      * 회원가입
      */
     public Long signup(MemberSignInRequest dto) {
-        return memberJpaRepository.save(dto.toEntity(passwordEncoder.encode(dto.getPassword()))).getId();
+        Member member = dto.toEntity(passwordEncoder.encode(dto.getPassword()));
+        System.out.println(member.getNickname());
+        return memberJpaRepository.save(member).getId();
     }
 
     /**

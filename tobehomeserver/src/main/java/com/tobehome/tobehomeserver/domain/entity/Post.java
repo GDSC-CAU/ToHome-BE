@@ -2,17 +2,63 @@ package com.tobehome.tobehomeserver.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-
+import java.sql.Timestamp;
 @Entity
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
+    private Long id;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(nullable = false, length = 100)
+    private String title;
+
+    @Column(name = "short_description", nullable = false, length = 100)
+    private String shortDescription;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
+
+    @Enumerated(EnumType.STRING)
+    private String type;
+
+    @ManyToOne
+    @JoinColumn(name = "material_category")
+    private Long materialCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "furniture_category")
+    private Long furnitureCategory;
+
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
+
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createdAt;
+
+    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Timestamp updatedAt;
+
+    @Builder
+    public Post(Long userId, String title, String shortDescription, String content, String type,
+                Long materialCategory, Long furnitureCategory, String imageUrl,
+                Timestamp createdAt, Timestamp updatedAt) {
+        this.userId = userId;
+        this.title = title;
+        this.shortDescription = shortDescription;
+        this.content = content;
+        this.type = type;
+        this.materialCategory = materialCategory;
+        this.furnitureCategory = furnitureCategory;
+        this.imageUrl = imageUrl;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

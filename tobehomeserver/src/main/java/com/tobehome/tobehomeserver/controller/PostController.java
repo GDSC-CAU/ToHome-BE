@@ -21,10 +21,10 @@ public class PostController {
         return postService.createPost(request);
     }
 
-    @GetMapping
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
-    }
+//    @GetMapping
+//    public List<Post> getAllPosts() {
+//        return postService.getAllPosts();
+//    }
     @GetMapping
     public Page<Post> getPostsByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
         return postService.getPostsByPage(page, size);

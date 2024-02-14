@@ -26,15 +26,16 @@ public class Post {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name ="type")
     private String type;
 
-    @ManyToOne
-    @JoinColumn(name = "material_category")
+    // @JoinColumn(name = "material_category")
+    @Column(name = "material_category")
     private Long materialCategory;
 
-    @ManyToOne
-    @JoinColumn(name = "furniture_category")
+//    @ManyToOne
+//    @JoinColumn(name = "furniture_category")
+    @Column(name = "furniture_category")
     private Long furnitureCategory;
 
     @Column(name = "image_url", length = 500)

@@ -31,10 +31,9 @@ public class PostService {
                 .build();
         return postJpaRepository.save(post).getId();
     }
-
-    public List<Post> getAllPosts() {    //게시글 목록 조회
-        return postJpaRepository.findAll();
-    }
+//    public List<Post> getAllPosts() {    //게시글 목록 조회
+//        return postJpaRepository.findAll();
+//    }
 
     public Page<Post> getPostsByPage(int page, int size) {       //게시글 페이지 당 목록 조회
         return postJpaRepository.findAll(PageRequest.of(page - 1, size));

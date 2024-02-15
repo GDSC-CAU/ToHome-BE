@@ -1,5 +1,6 @@
 package com.tobehome.tobehomeserver.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,7 @@ public class Member implements UserDetails {
     private String nickname;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Builder

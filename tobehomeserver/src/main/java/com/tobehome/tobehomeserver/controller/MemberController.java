@@ -1,5 +1,6 @@
 package com.tobehome.tobehomeserver.controller;
 
+import com.tobehome.tobehomeserver.dto.request.member.MemberLogInRequest;
 import com.tobehome.tobehomeserver.dto.request.member.MemberSignInRequest;
 import com.tobehome.tobehomeserver.dto.response.member.MemberLogInResponse;
 import com.tobehome.tobehomeserver.service.MemberService;
@@ -33,10 +34,14 @@ public class MemberController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody MemberSignInRequest request) {
-        String token = memberService.login(request);
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
+//    public ResponseEntity<Map<String, Object>> login(@RequestBody MemberSignInRequest request) {
+//        String token = memberService.login(request);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("token", token);
+//        return ResponseEntity.ok(response);
+//    }
+    public ResponseEntity<Map<String, Object>> login(@RequestBody MemberLogInRequest request) {
+        Map<String, Object> response = memberService.login(request);
         return ResponseEntity.ok(response);
     }
 

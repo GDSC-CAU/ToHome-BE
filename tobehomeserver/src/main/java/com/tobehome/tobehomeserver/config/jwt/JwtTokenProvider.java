@@ -31,20 +31,18 @@ public class JwtTokenProvider {
         JWT_SECRET = Base64.getEncoder().encodeToString(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(Authentication authentication, Long expiredTokenTime) {
-        final Date now = new Date();
+    public String generateToken(Authentication authentication) {
+
 
         // Claim: JWT 토큰에 저장되는 정보
         final Claims claims = Jwts.claims()
-                .setIssuedAt(now)       // 발급 시간을 지금으로 설정
-                .setExpiration(new Date(now.getTime() + expiredTokenTime));     // 만료 시간 설정
+                .setIssuedAt(new Date());
 
         // 사용자의 id를 Claim에 저장
         Member memberEntity = (Member) authentication.getPrincipal();
         Long id = memberEntity.getId();
         claims.put("id", id);
 
-        // JWT는 Header, Claim(payload), Signature 세 부분으로 구성되어 있음.
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setClaims(claims)

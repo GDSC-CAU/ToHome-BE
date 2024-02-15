@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -50,20 +52,20 @@ public class MemberService implements UserDetailsService {
     /**
      * 로그인
      */
-    public String login(MemberSignInRequest dto) {
+    public Map<String, Object> login(MemberLogInRequest dto) {
 
         Optional<Member> optionalMember = memberJpaRepository.findByNickname(dto.getNickname());
 
         // nickname이 일치하는 Member가 없는 경우
         if (optionalMember.isEmpty()) {
-            throw new AuthenticationException("닉네임이 존재하지 않습니다.") {};
+            throw new AuthenticationException("닉네임 또는 비밀번호가 존재하지 않습니다.") {};
         }
 
         Member member = optionalMember.get();
 
         // password가 일치하지 않으면 null 반환
         if(!passwordEncoder.matches(dto.getPassword(), member.getPassword())) {
-            throw new AuthenticationException("비밀번호가 일치하지 않습니다.") {};
+            throw new AuthenticationException("닉네임 또는 비밀번호가 일치하지 않습니다.") {};
         }
 
 
@@ -77,7 +79,12 @@ public class MemberService implements UserDetailsService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return jwtTokenProvider.generateToken(authentication, 60*60*1000L); // 토큰 유효시간: 1시간
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("token", token);
+        body.put("id", member.getId());
+        return body;
     }
 
     /**

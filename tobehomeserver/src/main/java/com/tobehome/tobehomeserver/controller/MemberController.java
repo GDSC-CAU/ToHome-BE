@@ -1,6 +1,7 @@
 package com.tobehome.tobehomeserver.controller;
 
 import com.tobehome.tobehomeserver.dto.request.member.MemberSignInRequest;
+import com.tobehome.tobehomeserver.dto.response.member.MemberLogInResponse;
 import com.tobehome.tobehomeserver.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +17,13 @@ public class MemberController {
 
     @PostMapping("/signup")
     public Long signup(@RequestBody MemberSignInRequest request) {
+        System.out.println("signup 실행됨");
         return memberService.signup(request);
+    }
+
+    @PostMapping("/login")
+    public MemberLogInResponse login(@RequestBody MemberSignInRequest request) {
+        return memberService.login(request);
     }
 
     @GetMapping("/logout")

@@ -49,11 +49,9 @@ public class MemberService implements UserDetailsService {
      */
     public MemberLogInResponse login(MemberSignInRequest dto) {
         Optional<Member> optionalMember = memberJpaRepository.findByNickname(dto.getNickname());
-        System.out.println("optionalMember: " + optionalMember);
 
         // nickname이 일치하는 Member가 없는 경우
         if (optionalMember.isEmpty()) {
-            System.out.println("optionalMember.isEmpty()");
             return null;
         }
 
@@ -62,11 +60,9 @@ public class MemberService implements UserDetailsService {
 
         // password가 일치하지 않으면 null 반환
         if(!passwordEncoder.matches(dto.getPassword(), member.getPassword())) {
-            System.out.println("!passwordEncoder.matches(dto.getPassword(), member.getPassword())");
             return null;
         }
 
-        System.out.println("password 일치");
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(dto.getNickname(), dto.getPassword());
@@ -77,12 +73,9 @@ public class MemberService implements UserDetailsService {
         // 이 과정에서 CustomUserDetailsService 에서 우리가 재정의한 loadUserByUsername 메서드 호출
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        System.out.println("authentication: " + authentication);
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtTokenProvider.generateToken(authentication, 60*60*1000L);
-        System.out.println("최종 accessToken: " + accessToken);
         return new MemberLogInResponse(accessToken);
     }
 

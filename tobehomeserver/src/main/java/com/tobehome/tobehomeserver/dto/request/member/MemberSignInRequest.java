@@ -2,11 +2,11 @@ package com.tobehome.tobehomeserver.dto.request.member;
 
 import com.tobehome.tobehomeserver.domain.entity.Member;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter @Setter
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class MemberSignInRequest {
 

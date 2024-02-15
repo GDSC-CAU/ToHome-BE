@@ -75,7 +75,7 @@ public class MemberService implements UserDetailsService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return jwtTokenProvider.generateToken(authentication, 60*60*1000L);
+        return jwtTokenProvider.generateToken(authentication, 60*60*1000L); // 토큰 유효시간: 1시간
     }
 
     /**

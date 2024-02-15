@@ -1,5 +1,6 @@
 package com.tobehome.tobehomeserver.config.jwt;
 
+import com.tobehome.tobehomeserver.domain.entity.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -35,7 +36,11 @@ public class JwtTokenProvider {
         final Claims claims = Jwts.claims()
                 .setIssuedAt(now)       // 발급 시간을 지금으로 설정
                 .setExpiration(new Date(now.getTime() + expiredTokenTime));     // 만료 시간 설정
-        claims.put("id", authentication.getPrincipal());        // 사용자의 id를 Claim에 저장
+
+        // 사용자의 id를 Claim에 저장
+        Member memberEntity = (Member) authentication.getPrincipal();
+        Long id = memberEntity.getId();
+        claims.put("id", id);
 
         // JWT는 Header, Claim(payload), Signature 세 부분으로 구성되어 있음.
         return Jwts.builder()

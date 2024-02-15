@@ -25,7 +25,6 @@ public class MemberController {
         로그인/회원가입 관련 API
      */
     @PostMapping("signup")
-    @PreAuthorize("permitAll()")
     public ResponseEntity<Map<String, Object>> signup(@RequestBody MemberSignInRequest request) {
         Long id = memberService.signup(request);
         Map<String, Object> response = new HashMap<>();

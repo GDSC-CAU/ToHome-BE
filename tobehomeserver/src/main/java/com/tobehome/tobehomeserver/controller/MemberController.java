@@ -34,15 +34,18 @@ public class MemberController {
     }
 
     @PostMapping("login")
-    public MemberLogInResponse login(@RequestBody MemberSignInRequest request) {
-        return memberService.login(request);
+    public ResponseEntity<Map<String, Object>> login(@RequestBody MemberSignInRequest request) {
+        String token = memberService.login(request);
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        new SecurityContextLogoutHandler().logout(request, response,
-                SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/";
-    }
+//    @GetMapping("logout")
+//    public String logout(HttpServletRequest request, HttpServletResponse response) {
+//        new SecurityContextLogoutHandler().logout(request, response,
+//                SecurityContextHolder.getContext().getAuthentication());
+//        return "redirect:/";
+//    }
 
 }

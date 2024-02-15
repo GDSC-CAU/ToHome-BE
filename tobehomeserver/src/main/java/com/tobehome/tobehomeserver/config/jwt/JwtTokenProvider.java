@@ -25,9 +25,6 @@ public class JwtTokenProvider {
 
     @PostConstruct
     protected void init() {
-        // JWT_SECRET 값을 Base64로 인코딩하는 메서드.
-        // base64 라이브러리에서 제공하는 인코더를 사용하여 JWT_SECRET 값을 인코딩
-        // encodeToString을 사용하여 byte[]를 String으로 변환
         JWT_SECRET = Base64.getEncoder().encodeToString(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
     }
 

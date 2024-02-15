@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
 
@@ -41,6 +42,7 @@ public class MemberService implements UserDetailsService {
      * 회원가입
      */
     public Long signup(MemberSignInRequest dto) {
+
         Member member = dto.toEntity(passwordEncoder.encode(dto.getPassword()));
         return memberJpaRepository.save(member).getId();
     }

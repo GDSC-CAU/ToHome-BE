@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
+@PropertySource("classpath:application-secret.properties")
 public class JwtTokenProvider {
     /*
         JWT 토큰을 생성하고 검증하는 클래스

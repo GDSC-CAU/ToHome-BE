@@ -1,9 +1,12 @@
 package com.tobehome.tobehomeserver.controller;
 
+import com.tobehome.tobehomeserver.domain.entity.Comment;
 import com.tobehome.tobehomeserver.domain.entity.Post;
 import com.tobehome.tobehomeserver.domain.entity.Like;
+import com.tobehome.tobehomeserver.dto.request.comment.CommentCreateRequest;
 import com.tobehome.tobehomeserver.dto.request.post.PostCreateRequest;
 import com.tobehome.tobehomeserver.dto.request.post.PostUpdateRequest;
+import com.tobehome.tobehomeserver.service.CommentService;
 import com.tobehome.tobehomeserver.service.LikeService;
 import com.tobehome.tobehomeserver.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,17 +26,19 @@ import java.util.List;
 @Service
 @RestController
 @RequestMapping("/api/posts")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class PostController {
 
-private final PostService postService;
+    private final PostService postService;
+    private final CommentService commentService;
     private final LikeService likeService;
 
-    @Autowired
-    public PostController(PostService postService, LikeService likeService) {
-        this.postService = postService;
-        this.likeService = likeService;
-    }
+//    @Autowired
+//    public PostController(PostService postService, LikeService likeService) {
+//        this.postService = postService;
+//        this.likeService = likeService;
+//    }
+
     @PostMapping
     public ResponseEntity<Long> createPost(@RequestBody PostCreateRequest request, @RequestHeader(name = "user_id") Long user_id) {
         try {
@@ -91,5 +96,24 @@ private final PostService postService;
     @GetMapping("/likedByUser/{userId}")
     public List<Post> getPostsLikedByUser(@PathVariable Long userId) {
         return likeService.getPostsLikedByUser(userId);
+    }
+
+    @PostMapping("/{postId}/comments")
+    public ResponseEntity<String> addComment(@PathVariable int postId, @RequestBody CommentCreateRequest request, @RequestHeader(name = "user_id") int userId) {
+        request.setUserId(userId);
+        request.setPostId(postId);
+
+        try {
+            commentService.addComment(request);
+            return ResponseEntity.ok("댓글이 추가되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("댓글 추가에 실패했습니다.");
+        }
+    }
+
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable int postId) {
+        List<Comment> comments = commentService.getCommentsByPostId(postId);
+        return ResponseEntity.ok(comments);
     }
 }

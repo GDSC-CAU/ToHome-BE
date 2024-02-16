@@ -43,6 +43,7 @@ public class MemberService implements UserDetailsService {
     /**
      * 회원가입
      */
+    @Transactional
     public Long signup(MemberSignInRequest dto) {
 
         Member member = dto.toEntity(passwordEncoder.encode(dto.getPassword()));
@@ -52,6 +53,7 @@ public class MemberService implements UserDetailsService {
     /**
      * 로그인
      */
+    @Transactional
     public Map<String, Object> login(MemberLogInRequest dto) {
 
         Optional<Member> optionalMember = memberJpaRepository.findByNickname(dto.getNickname());

@@ -13,6 +13,9 @@ spring:
         #        show_sql: true //sout 통해 출력
         format_sql: true
 
+  main:
+    allow-bean-definition-overriding: true
+
 logging:
   level:
     org.hibernate.SQL: debug

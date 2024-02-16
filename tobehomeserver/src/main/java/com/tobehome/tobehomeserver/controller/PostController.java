@@ -2,10 +2,12 @@ package com.tobehome.tobehomeserver.controller;
 
 import com.tobehome.tobehomeserver.domain.entity.Comment;
 import com.tobehome.tobehomeserver.domain.entity.Post;
+import com.tobehome.tobehomeserver.domain.entity.Like;
 import com.tobehome.tobehomeserver.dto.request.comment.CommentCreateRequest;
 import com.tobehome.tobehomeserver.dto.request.post.PostCreateRequest;
 import com.tobehome.tobehomeserver.dto.request.post.PostUpdateRequest;
 import com.tobehome.tobehomeserver.service.CommentService;
+import com.tobehome.tobehomeserver.service.LikeService;
 import com.tobehome.tobehomeserver.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,24 +16,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+
+
 
 import java.util.List;
 
+@Service
 @RestController
 @RequestMapping("/api/posts")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
+    private final LikeService likeService;
 
-    @Autowired
-    public PostController(PostService postService, CommentService commentService) {
-        this.postService = postService;
-        this.commentService = commentService;
-    }
-
+//    @Autowired
+//    public PostController(PostService postService, LikeService likeService) {
+//        this.postService = postService;
+//        this.likeService = likeService;
+//    }
 
     @PostMapping
     public ResponseEntity<Long> createPost(@RequestBody PostCreateRequest request, @RequestHeader(name = "user_id") Long user_id) {
@@ -65,6 +71,31 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
+    }
+
+    // 좋아요 추가
+    @PostMapping("/{postId}/likes")
+    public ResponseEntity<String> likePost(@PathVariable Long postId, @RequestHeader(name = "user_id") Long userId) {
+        try {
+            likeService.likePost(postId, userId);
+            return ResponseEntity.ok("게시물 좋아요 처리가 완료되었습니다.");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    // 한 게시물의 좋아요 수 조회
+    @GetMapping("/{postId}/likeCount")
+    public int getLikesCount(@PathVariable Long postId) {
+        return likeService.getLikesCount(postId);
+    }
+
+    // 한 사람이 좋아요 누른 게시물들 조회
+    @GetMapping("/likedByUser/{userId}")
+    public List<Post> getPostsLikedByUser(@PathVariable Long userId) {
+        return likeService.getPostsLikedByUser(userId);
     }
 
     @PostMapping("/{postId}/comments")

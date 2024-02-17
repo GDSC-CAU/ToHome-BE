@@ -1,6 +1,9 @@
 package com.tobehome.tobehomeserver.dto.request.post;
 
+import com.tobehome.tobehomeserver.dto.request.CategoryDTO;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +18,16 @@ public class PostCreateRequest {
     private Long materialCategory;
     private Long furnitureCategory;
     private String imageUrl;
+
+    public CategoryDTO toMaterialCategoryDTO() {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(materialCategory);
+        return categoryDTO;
+    }
+
+    public CategoryDTO toFurnitureCategoryDTO() {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(furnitureCategory);
+        return categoryDTO;
+    }
 }

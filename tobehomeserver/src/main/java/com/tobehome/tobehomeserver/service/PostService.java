@@ -2,6 +2,7 @@ package com.tobehome.tobehomeserver.service;
 
 import com.tobehome.tobehomeserver.domain.entity.Post;
 import com.tobehome.tobehomeserver.dto.request.post.PostCreateRequest;
+import com.tobehome.tobehomeserver.dto.request.post.PostDTO;
 import com.tobehome.tobehomeserver.dto.request.post.PostUpdateRequest;
 import com.tobehome.tobehomeserver.repository.PostJpaRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -76,5 +78,17 @@ public class PostService {
 
     public void deletePost(Long postId) {
         postJpaRepository.deleteById(postId);
+    }
+
+    public List<PostDTO> getPostsByMaterialCategory(Long materialCategoryId) {
+        // 구현: 특정 재료 카테고리에 속하는 게시글을 가져와서 DTO로 변환
+        List<Post> posts = postJpaRepository.findByMaterialCategory(materialCategoryId);
+        return posts.stream().map(PostDTO::fromEntity).collect(Collectors.toList());
+    }
+
+    public List<PostDTO> getPostsByFurnitureCategory(Long furnitureCategoryId) {
+        // 구현: 특정 가구 카테고리에 속하는 게시글을 가져와서 DTO로 변환
+        List<Post> posts = postJpaRepository.findByFurnitureCategory(furnitureCategoryId);
+        return posts.stream().map(PostDTO::fromEntity).collect(Collectors.toList());
     }
 }

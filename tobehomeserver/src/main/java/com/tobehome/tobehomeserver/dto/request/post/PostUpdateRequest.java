@@ -3,6 +3,8 @@ package com.tobehome.tobehomeserver.dto.request.post;
 import com.tobehome.tobehomeserver.dto.request.CategoryDTO;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor

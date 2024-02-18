@@ -16,6 +16,8 @@ public class PostUpdateRequest {
     private Long materialCategory;
     private Long furnitureCategory;
     private String imageUrl;
+    private String imageUrl2;
+    private String imageUrl3;
 
     public CategoryDTO toMaterialCategoryDTO() {
         CategoryDTO categoryDTO = new CategoryDTO();

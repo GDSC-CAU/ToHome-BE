@@ -9,4 +9,6 @@ public interface PostJpaRepository extends JpaRepository<Post, Long> {
     List<Post> findByFurnitureCategory(Long furnitureCategoryId);
 
     List<Post> findByMaterialCategory(Long materialCategoryId);
+
+    List<Post> findByUserId(Long userId);
 }

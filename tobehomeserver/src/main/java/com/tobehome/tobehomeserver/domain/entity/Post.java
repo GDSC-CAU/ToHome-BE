@@ -48,6 +48,18 @@ public class Post {
     @Column(name = "image_url", length = 500)
     private String imageUrl;
 
+    @Column(name = "image_url2", length = 500)
+    private String imageUrl2;
+
+    @Column(name = "image_url3", length = 500)
+    private String imageUrl3;
+
+    @Column(name = "x")
+    private Long x;
+
+    @Column(name = "y")
+    private Long y;
+
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
@@ -58,8 +70,8 @@ public class Post {
 
     @Builder
     public Post(Long userId, String title, String shortDescription, String content, String type,
-                Long materialCategory, Long furnitureCategory, String imageUrl,
-                Timestamp createdAt, Timestamp updatedAt) {
+                Long materialCategory, Long furnitureCategory, String imageUrl, String imageUrl2, String imageUrl3,
+                Long x, Long y,Timestamp createdAt, Timestamp updatedAt) {
         this.userId = userId;
         this.title = title;
         this.shortDescription = shortDescription;
@@ -68,6 +80,10 @@ public class Post {
         this.materialCategory = materialCategory;
         this.furnitureCategory = furnitureCategory;
         this.imageUrl = imageUrl;
+        this.imageUrl2 = imageUrl2;
+        this.imageUrl3 = imageUrl3;
+        this.x = x;
+        this.y = y;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

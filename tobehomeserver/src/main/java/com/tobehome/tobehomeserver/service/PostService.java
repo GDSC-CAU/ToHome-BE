@@ -34,6 +34,10 @@ public class PostService {
                     .materialCategory(request.getMaterialCategory())
                     .furnitureCategory(request.getFurnitureCategory())
                     .imageUrl(request.getImageUrl())
+                    .imageUrl2(request.getImageUrl2())
+                    .imageUrl3(request.getImageUrl3())
+                    .x(request.getX())
+                    .y(request.getY())
                     .build();
             return postJpaRepository.save(post).getId();
         } else {
@@ -64,6 +68,10 @@ public class PostService {
         return postJpaRepository.findById(postId).orElse(null);
     }
 
+    public List<Post> getPostsByUserId(Long userId) {
+        return postJpaRepository.findByUserId(userId);
+    }
+
     public void updatePost(Long postId, PostUpdateRequest request) {
         Post post = postJpaRepository.findById(postId).orElse(null);
         if (post != null) {
@@ -73,6 +81,8 @@ public class PostService {
             post.setMaterialCategory(request.getMaterialCategory());
             post.setFurnitureCategory(request.getFurnitureCategory());
             post.setImageUrl(request.getImageUrl());
+            post.setImageUrl2(request.getImageUrl2());
+            post.setImageUrl3(request.getImageUrl3());
         }
     }
 

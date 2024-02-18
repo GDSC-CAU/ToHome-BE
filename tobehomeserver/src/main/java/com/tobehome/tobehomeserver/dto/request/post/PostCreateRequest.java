@@ -18,6 +18,12 @@ public class PostCreateRequest {
     private Long materialCategory;
     private Long furnitureCategory;
     private String imageUrl;
+    private String imageUrl2;
+    private String imageUrl3;
+    private Long x;
+    private Long y;
+
+
 
     public CategoryDTO toMaterialCategoryDTO() {
         CategoryDTO categoryDTO = new CategoryDTO();

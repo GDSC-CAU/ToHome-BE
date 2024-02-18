@@ -63,6 +63,11 @@ public class PostController {
         return postService.getPostById(postId);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<Post> getPostsByUserId(@PathVariable Long userId) {
+        return postService.getPostsByUserId(userId);
+    }
+
     @PatchMapping("/{postId}")
     public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequest request) {
         postService.updatePost(postId, request);

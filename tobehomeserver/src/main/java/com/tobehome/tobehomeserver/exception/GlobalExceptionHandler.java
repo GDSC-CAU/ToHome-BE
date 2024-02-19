@@ -17,6 +17,17 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(message));
     }
 
+//    @ExceptionHandler(NicknameDuplicateException.class)
+//    public ResponseEntity<Object> handleNicknameDuplicateException(NicknameDuplicateException ex) {
+//        return ResponseEntity.badRequest().body(new ErrorResponse("이미 존재하는 닉네임입니다."));
+//    }
+//
+//    @ExceptionHandler(MemberNotFoundException.class)
+//    public ResponseEntity<Object> handleMemberNotFoundException(MemberNotFoundException ex) {
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                .body(new ErrorResponse("회원을 찾을 수 없습니다."));
+//    }
+
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

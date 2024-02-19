@@ -61,8 +61,8 @@ public class Post {
     @Setter
     public static class Rel {
         private Long p;
-        private String x;
-        private String y;
+        private Long x;
+        private Long y;
 
         // 생성자, getter 및 setter 메서드 등을 추가할 수 있음
     }

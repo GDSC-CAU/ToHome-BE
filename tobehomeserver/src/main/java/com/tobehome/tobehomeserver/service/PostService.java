@@ -6,7 +6,6 @@ import com.tobehome.tobehomeserver.dto.request.post.PostDTO;
 import com.tobehome.tobehomeserver.dto.request.post.PostUpdateRequest;
 import com.tobehome.tobehomeserver.repository.PostJpaRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +24,7 @@ public class PostService {
 
     public Long createPost(PostCreateRequest request, Long userId) {
         if (userId != null) {
+
             Post post = Post.builder()
                     .userId(userId)
                     .title(request.getTitle())
@@ -36,8 +36,7 @@ public class PostService {
                     .imageUrl(request.getImageUrl())
                     .imageUrl2(request.getImageUrl2())
                     .imageUrl3(request.getImageUrl3())
-                    .x(request.getX())
-                    .y(request.getY())
+                    .rel(request.getRel())
                     .build();
             return postJpaRepository.save(post).getId();
         } else {

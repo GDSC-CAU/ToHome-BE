@@ -5,6 +5,8 @@ import com.tobehome.tobehomeserver.domain.entity.Member;
 import com.tobehome.tobehomeserver.dto.request.member.MemberLogInRequest;
 import com.tobehome.tobehomeserver.dto.request.member.MemberSignInRequest;
 import com.tobehome.tobehomeserver.dto.response.member.MemberLogInResponse;
+import com.tobehome.tobehomeserver.exception.MemberNotFoundException;
+import com.tobehome.tobehomeserver.exception.NicknameDuplicateException;
 import com.tobehome.tobehomeserver.repository.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -108,6 +110,22 @@ public class MemberService implements UserDetailsService {
 
         System.out.println("loadUserByUsername 유저 찾음: " + member);
         return member;
+    }
+
+    /**
+     * 닉네임 수정
+     */
+    @Transactional
+    public void updateNickname(Long memberId, String newNickname) {
+        Member member = memberJpaRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("회원을 찾을 수 없습니다."));
+
+        if (memberJpaRepository.existsByNickname(newNickname)) {
+            throw new NicknameDuplicateException("이미 존재하는 닉네임입니다.");
+        }
+
+        member.setNickname(newNickname);
+        memberJpaRepository.save(member);
     }
 
 }

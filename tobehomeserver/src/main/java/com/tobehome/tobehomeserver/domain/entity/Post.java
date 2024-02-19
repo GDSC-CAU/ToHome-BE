@@ -54,11 +54,20 @@ public class Post {
     @Column(name = "image_url3", length = 500)
     private String imageUrl3;
 
-    @Column(name = "x")
-    private Long x;
+    @Embeddable
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class Rel {
+        private Long p;
+        private String x;
+        private String y;
 
-    @Column(name = "y")
-    private Long y;
+        // 생성자, getter 및 setter 메서드 등을 추가할 수 있음
+    }
+    @ElementCollection
+    private List<Rel> rel;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -71,7 +80,7 @@ public class Post {
     @Builder
     public Post(Long userId, String title, String shortDescription, String content, String type,
                 Long materialCategory, Long furnitureCategory, String imageUrl, String imageUrl2, String imageUrl3,
-                Long x, Long y,Timestamp createdAt, Timestamp updatedAt) {
+                List<Rel> rel,Timestamp createdAt, Timestamp updatedAt) {
         this.userId = userId;
         this.title = title;
         this.shortDescription = shortDescription;
@@ -82,8 +91,7 @@ public class Post {
         this.imageUrl = imageUrl;
         this.imageUrl2 = imageUrl2;
         this.imageUrl3 = imageUrl3;
-        this.x = x;
-        this.y = y;
+        this.rel = rel;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

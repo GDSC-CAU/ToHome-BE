@@ -1,8 +1,10 @@
 package com.tobehome.tobehomeserver.dto.request.post;
 
+import com.tobehome.tobehomeserver.domain.entity.Post;
 import com.tobehome.tobehomeserver.dto.request.CategoryDTO;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,8 +22,7 @@ public class PostCreateRequest {
     private String imageUrl;
     private String imageUrl2;
     private String imageUrl3;
-    private Long x;
-    private Long y;
+    private List<Post.Rel> rel;
 
 
 

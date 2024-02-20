@@ -65,12 +65,22 @@ public class MemberController {
     @PatchMapping("/{memberId}/nickname")
     public ResponseEntity<String> updateNickname(@PathVariable Long memberId, @RequestBody UpdateNicknameRequest request) {
         try {
-            memberService.updateNickname(memberId, request.getNewNickname());
+            memberService.updateNickname(memberId, request.getNewNickname(), request.getNewImageUrl());
             return ResponseEntity.ok("닉네임이 성공적으로 수정되었습니다.");
         } catch (NicknameDuplicateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (MemberNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("닉네임 수정 중 오류가 발생했습니다.");
+        }
+    }
+
+    @PatchMapping("/{memberId}/image")
+    public ResponseEntity<String> updateImage(@PathVariable Long memberId, @RequestBody UpdateNicknameRequest request) {
+        try {
+            memberService.updateImage(memberId, request.getNewImageUrl());
+            return ResponseEntity.ok("사진이 성공적으로 수정되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("닉네임 수정 중 오류가 발생했습니다.");
         }

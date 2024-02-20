@@ -30,11 +30,15 @@ public class Member implements UserDetails {
     @JsonIgnore
     private String password;
 
+    @Column
+    private String imageUrl;
+
     @Builder
-    public Member(String email, String nickname, String password) {
+    public Member(String email, String nickname, String password, String imageUrl) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+        this.imageUrl = imageUrl;
     }
 
 

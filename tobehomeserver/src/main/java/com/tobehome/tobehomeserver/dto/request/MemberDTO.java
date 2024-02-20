@@ -12,8 +12,9 @@ public class MemberDTO {
     private Long id;
     private String email;
     private String nickname;
+    private String imageUrl;
 
     public static MemberDTO from(Member member) {
-        return new MemberDTO(member.getId(), member.getEmail(), member.getNickname());
+        return new MemberDTO(member.getId(), member.getEmail(), member.getNickname(), member.getImageUrl());
     }
 }

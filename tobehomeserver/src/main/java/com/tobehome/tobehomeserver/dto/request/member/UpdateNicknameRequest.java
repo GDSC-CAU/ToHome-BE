@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateNicknameRequest {
     private String newNickname;
+    private String newImageUrl;
 }

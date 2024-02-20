@@ -116,7 +116,7 @@ public class MemberService implements UserDetailsService {
      * 닉네임 수정
      */
     @Transactional
-    public void updateNickname(Long memberId, String newNickname) {
+    public void updateNickname(Long memberId, String newNickname, String newImageUrl) {
         Member member = memberJpaRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException("회원을 찾을 수 없습니다."));
 
@@ -125,7 +125,18 @@ public class MemberService implements UserDetailsService {
         }
 
         member.setNickname(newNickname);
+        member.setImageUrl(newImageUrl);
         memberJpaRepository.save(member);
     }
+
+    @Transactional
+    public void updateImage(Long memberId, String newImageUrl) {
+        Member member = memberJpaRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("회원을 찾을 수 없습니다."));
+
+        member.setImageUrl(newImageUrl);
+        memberJpaRepository.save(member);
+    }
+
 
 }

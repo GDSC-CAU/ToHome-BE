@@ -62,6 +62,7 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/signup")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/{memberId}")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/posts/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                 .anyRequest().authenticated()
                 .and()
